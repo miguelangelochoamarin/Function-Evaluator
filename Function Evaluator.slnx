@@ -1,1 +1,5 @@
-<Solution />
+<Solution>
+  <Project Path="Evaluator.logic/Evaluator.logic.csproj" />
+  <Project Path="Evaluator.Ui.Console/Evaluator.Ui.Console.csproj" />
+  <Project Path="Evaluator.Ui.Windows/Evaluator.Ui.Windows.csproj" />
+</Solution>
