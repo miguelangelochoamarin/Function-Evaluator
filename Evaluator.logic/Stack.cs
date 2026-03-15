@@ -1,4 +1,4 @@
-﻿namespace Evaluator.Logic
+﻿namespace Evaluator.logic
 {
     public class Stack<T>
     {
@@ -7,42 +7,39 @@
 
         public Stack(int n)
         {
-        N = n;
-        _stack = new T[N];
+            N = n;
+            _stack = new T[N];
         }
 
-    public int N { get; }
+        public int N { get; }
 
-    public bool IsEmpty => _top == 0;
+        public bool IsEmpty => _top == 0;
 
-    public bool IsFull => _top == N;
+        public bool IsFull => _top == N;
+
+        public T GetItemInTop() => _stack[_top - 1];
 
         public void Push(T item)
-    {
-        if (IsFull)
         {
-            throw new Exception("Stack full.");
+            if (IsFull)
+            {
+                throw new Exception("Stack full.");
+            }
+
+            _stack[_top] = item;
+            _top++;
         }
 
-        _stack[_top] = item;
-        _top++;
-    }
-
-    public T Pop()
-    {
-        if (IsEmpty)
+        public T Pop()
         {
-            throw new Exception("Stack empty.");
-        }
+            if (IsEmpty)
+            {
+                throw new Exception("Stack empty.");
+            }
 
-        var item = _stack[_top - 1];
-        _top--;
-        return item;
-    }
-}
-}namespace Evaluator.logic
-{
-    internal class Stack
-    {
+            var item = _stack[_top - 1];
+            _top--;
+            return item;
+        }
     }
 }

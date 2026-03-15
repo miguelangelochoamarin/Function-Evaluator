@@ -10,15 +10,69 @@
 
         private static double Calculate(string postfix)
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         private static string ToPostfix(string infix)
         {
-            throw new NotImplementedException();
+            var stack = new Stack<char>(100);
+            var postfix = string.Empty;
+            for (int i = 0; i < infix.Length; i++)
+            {
+                if (IsOperator(infix[i])) 
+                {
+                    if (stack.IsEmpty)
+                    {
+                        stack.Push(infix[i]);
+                    }
+                    else
+                    {
+                        if (infix[i] == ')')
+                        {
+                            do
+                            {
+                                postfix += stack.Pop();
+                            } while (stack.GetItemInTop() != '(');
+                            stack.Pop();
+                        }
+                        else
+                        {
+                            if (PriorityInExpression(infix[i]) > PriorityInStack(stack.GetItemInTop()))
+                            {
+                                stack.Push(infix[i]);
+                            }
+                            else
+                            {
+                                postfix += stack.Pop();
+                                stack.Push(infix[i]);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    postfix += infix[i];
+                }
+            }
+
+            while (!stack.IsEmpty)
+            {
+                postfix += stack.Pop();
+            }
+
+            return postfix;
         }
 
-        private int PriorityInExpression(char @operator)
+        private static bool IsOperator(char item)
+        {
+           if (item == '+' || item == '-' || item == '*' || item == '/' || item == '^' || item == '(' || item == ')')
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private static int PriorityInExpression(char @operator)
         {
             switch (@operator)
             {
@@ -31,7 +85,7 @@
                 default: throw new Exception("Not Valid Operator");
             }
         }
-            private int PriorityInStack(char @operator)
+        private static int PriorityInStack(char @operator)
         {
             switch (@operator)
             {
