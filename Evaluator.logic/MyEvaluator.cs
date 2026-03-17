@@ -10,7 +10,29 @@
 
         private static double Calculate(string postfix)
         {
-            return 0;
+            var stack = new Stack<double>(100);
+            for (int i = 0; i < postfix.Length; i++)
+            {
+                if (IsOperator(postfix[i]))
+                {
+                    var number2 = stack.Pop();
+                    var number1 = stack.Pop();
+                    var result = Calculate(number1, postfix[i], number2);
+                    stack.Push(result);
+                }
+                else
+                {
+                    var number = ToDouble(postfix[i]);
+                    stack.Push(number);
+                }
+            }
+            return stack.Pop();
+        }
+
+
+        private static double ToDouble(char number)
+        {
+            return (double)number - 48;
         }
 
         private static string ToPostfix(string infix)
@@ -96,6 +118,19 @@
                 case '-': return 1;
                 case '(': return 0;
                 default: throw new Exception("Not Valid Operator");
+            }
+        }
+
+        private static double Calculate(double number1, char @operator, double number2)
+        {
+            switch (@operator)
+            {
+                case '^': return Math.Pow(number1, number2);
+                case '*': return number1 * number2;
+                case '/': return number1 / number2;
+                case '+': return number1 + number2;
+                case '-': return number1 - number2;
+                default: throw new Exception("Not valid operator");
             }
         }
 
